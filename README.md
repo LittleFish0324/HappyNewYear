@@ -45,12 +45,22 @@
    $password = "password";
    $dbname = "newyear_messages";
    ```
+   - 此项目中默认的MySQL数据库账号密码配置如下：
 
-3. **设置Web服务器**
+   ```php
+   // 数据库连接配置
+   $servername = "localhost";
+   $username = "happynewyear";
+   $password = "happynewyear0324";
+   $dbname = "happynewyear";
+   ```
+   - 您可以自由修改数据库账密配置，确保安全！
+   
+2. **设置Web服务器**
    - 将项目部署到Web服务器根目录或子目录
    - 确保PHP有权限写入会话文件
 
-4. **启动服务**
+3. **启动服务**
    - 可使用PHP内置服务器进行开发测试
    ```bash
    php -S localhost:8000 -t /path/to/project
