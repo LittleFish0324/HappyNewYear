@@ -5,6 +5,31 @@ $username = "happynewyear";
 $password = "happynewyear0324";
 $dbname = "happynewyear";
 
+// 计算中国新年（春节）日期的函数
+function getChineseNewYear($year) {
+    // 以下是简化的春节日期表，实际应该使用农历计算库
+    // 这里提供了2024-2030年的春节日期作为示例
+    $springFestivalDates = [
+        2024 => '2024-02-10',
+        2025 => '2025-01-29',
+        2026 => '2026-02-17',
+        2027 => '2027-02-06',
+        2028 => '2028-01-26',
+        2029 => '2029-02-13',
+        2030 => '2030-02-03'
+    ];
+    
+    // 如果在已知范围内，直接返回
+    if (isset($springFestivalDates[$year])) {
+        return $springFestivalDates[$year];
+    }
+    
+    // 对于未知年份，这里提供一个简单的估算方法
+    // 实际应用中应使用专业的农历计算库
+    $date = new DateTime("$year-02-05");
+    return $date->format('Y-m-d');
+}
+
 // 创建数据库连接
 $conn = new mysqli($servername, $username, $password, $dbname);
 
@@ -16,6 +41,13 @@ if ($conn->connect_error) {
 // 获取下一个新年的年份
 $currentYear = date("Y");
 $nextYear = $currentYear + 1;
+
+// 获取中国新年（春节）日期
+$chineseNewYearDate = getChineseNewYear($nextYear);
+$chineseNewYear = new DateTime($chineseNewYearDate);
+$chineseNewYearYear = $chineseNewYear->format('Y');
+$chineseNewYearMonth = $chineseNewYear->format('m');
+$chineseNewYearDay = $chineseNewYear->format('d');
 
 // 获取留言总数
 $messageCount = 0;
@@ -31,7 +63,7 @@ $errorMsg = "";
 // 敏感词过滤函数
 define('SENSITIVE_WORDS', [
     // 敏感词列表 - 这里仅作为示例，可以根据实际需求扩展
-    '傻逼', '傻子', '老傻子', '乐子', '废物', '去死', '死妈', '死爹', '死全家', '思全家', '去你的', '去你妈的', '高芷涵'
+    '不良词语1', '不良词语2', '不良词语3', '违规内容', '违法信息',
     // 政治敏感词等其他需要过滤的内容
 ]);
 
@@ -363,9 +395,9 @@ $conn->close();
 <body class="font-sans text-dark">
     <!-- 灯笼装饰元素 -->
     <div class="lantern" style="top: 10%; left: 5%;"></div>
-    <div class="lantern" style="top: 15%; left: 90%; animation-delay: 1;"></div>
-    <div class="lantern" style="top: 60%; left: 8%; animation-delay: 2;"></div>
-    <div class="lantern" style="top: 70%; left: 92%; animation-delay: 3;"></div>
+    <div class="lantern" style="top: 15%; left: 90%; animation-delay: 1s;"></div>
+    <div class="lantern" style="top: 60%; left: 8%; animation-delay: 2s;"></div>
+    <div class="lantern" style="top: 70%; left: 92%; animation-delay: 3s;"></div>
 
     <!-- 烟花效果容器 -->
     <div id="fireworks-container" class="fixed inset-0 pointer-events-none z-10"></div>
@@ -379,7 +411,7 @@ $conn->close();
             <?php echo $nextYear; ?>年新年倒计时
         </h1>
         <p class="text-[clamp(1rem,2vw,1.25rem)] text-dark max-w-2xl mx-auto">
-            2026倒计时
+            时光荏苒，转眼间又到了辞旧迎新的时刻。让我们一起倒数，迎接充满希望的新一年！
         </p>
         <div class="mt-4 flex justify-center items-center gap-2 text-dark/70">
             <i class="fa fa-comments-o text-primary"></i>
@@ -412,6 +444,33 @@ $conn->close();
                 </div>
                 <div class="text-center mt-8 text-dark/70 italic">
                     距离<?php echo $nextYear; ?>年1月1日 00:00:00 还有
+                </div>
+            </div>
+        </section>
+
+        <!-- 中国新年（春节）倒计时区域 -->
+        <section class="mb-16 countdown-container">
+            <div class="bg-white/80 backdrop-blur-md rounded-2xl shadow-xl p-6 md:p-10 max-w-5xl mx-auto">
+                <div class="flex flex-wrap justify-center gap-4 md:gap-8">
+                    <div class="text-center">
+                        <div id="days-cn" class="countdown-digit">00</div>
+                        <div class="countdown-label">天</div>
+                    </div>
+                    <div class="text-center">
+                        <div id="hours-cn" class="countdown-digit">00</div>
+                        <div class="countdown-label">时</div>
+                    </div>
+                    <div class="text-center">
+                        <div id="minutes-cn" class="countdown-digit">00</div>
+                        <div class="countdown-label">分</div>
+                    </div>
+                    <div class="text-center">
+                        <div id="seconds-cn" class="countdown-digit">00</div>
+                        <div class="countdown-label">秒</div>
+                    </div>
+                </div>
+                <div class="text-center mt-8 text-dark/70 italic">
+                    距离<?php echo $chineseNewYearYear; ?>年春节（<?php echo $chineseNewYearMonth; ?>月<?php echo $chineseNewYearDay; ?>日）00:00:00 还有
                 </div>
             </div>
         </section>
@@ -498,7 +557,7 @@ $conn->close();
 
     <!-- 页脚 -->
     <footer class="mt-16 py-6 text-center text-dark/60 border-t border-gray-200 relative z-20">
-        <p>© <?php echo date("Y"); ?> 新年倒计时网站 | 少羽牛逼</p>
+        <p>© <?php echo date("Y"); ?> 新年倒计时网站 | 数据实时更新，祝福永不缺席</p>
     </footer>
 
     <!-- JavaScript -->
@@ -508,6 +567,10 @@ $conn->close();
             const currentYear = new Date().getFullYear();
             const nextYear = currentYear + 1;
             const newYearDate = new Date(nextYear, 0, 1, 0, 0, 0);
+            
+            // 计算中国新年（春节）的时间
+            // 这里使用从PHP获取的日期信息，或者使用JavaScript内置逻辑
+            const chineseNewYearDate = new Date(<?php echo $chineseNewYearYear; ?>, <?php echo $chineseNewYearMonth - 1; ?>, <?php echo $chineseNewYearDay; ?>, 0, 0, 0);
             
             // 倒计时更新函数
             function updateCountdown() {
@@ -532,9 +595,40 @@ $conn->close();
                 }
             }
             
+            // 中国新年倒计时更新函数
+            function updateChineseNewYearCountdown() {
+                const now = new Date();
+                const diff = chineseNewYearDate - now;
+                
+                // 计算天、时、分、秒
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+                
+                // 更新DOM
+                if (document.getElementById('days-cn')) {
+                    document.getElementById('days-cn').textContent = days.toString().padStart(2, '0');
+                    document.getElementById('hours-cn').textContent = hours.toString().padStart(2, '0');
+                    document.getElementById('minutes-cn').textContent = minutes.toString().padStart(2, '0');
+                    document.getElementById('seconds-cn').textContent = seconds.toString().padStart(2, '0');
+                }
+                
+                // 如果是最后10秒，添加动画效果
+                if (days === 0 && hours === 0 && minutes === 0 && seconds < 11) {
+                    createFireworks();
+                }
+            }
+            
             // 立即更新一次，然后每秒更新
             updateCountdown();
-            setInterval(updateCountdown, 1000);
+            updateChineseNewYearCountdown();
+            
+            // 创建一个统一的定时器来更新两个倒计时
+            setInterval(function() {
+                updateCountdown();
+                updateChineseNewYearCountdown();
+            }, 1000);
             
             // 字数统计功能
             const contentTextarea = document.getElementById('content');
