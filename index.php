@@ -363,9 +363,9 @@ $conn->close();
 <body class="font-sans text-dark">
     <!-- 灯笼装饰元素 -->
     <div class="lantern" style="top: 10%; left: 5%;"></div>
-    <div class="lantern" style="top: 15%; left: 90%; animation-delay: 1s;"></div>
-    <div class="lantern" style="top: 60%; left: 8%; animation-delay: 2s;"></div>
-    <div class="lantern" style="top: 70%; left: 92%; animation-delay: 3s;"></div>
+    <div class="lantern" style="top: 15%; left: 90%; animation-delay: 1;"></div>
+    <div class="lantern" style="top: 60%; left: 8%; animation-delay: 2;"></div>
+    <div class="lantern" style="top: 70%; left: 92%; animation-delay: 3;"></div>
 
     <!-- 烟花效果容器 -->
     <div id="fireworks-container" class="fixed inset-0 pointer-events-none z-10"></div>
@@ -379,7 +379,7 @@ $conn->close();
             <?php echo $nextYear; ?>年新年倒计时
         </h1>
         <p class="text-[clamp(1rem,2vw,1.25rem)] text-dark max-w-2xl mx-auto">
-            马上又是2026年啦！广东littlefish跟你们拜一个早年哈哈哈哈哈哈哈哈哈哈
+            2026倒计时
         </p>
         <div class="mt-4 flex justify-center items-center gap-2 text-dark/70">
             <i class="fa fa-comments-o text-primary"></i>
